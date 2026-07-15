@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product, isAdmin, onDelete }) => {
+const ProductCard = ({ product, isAdmin, user, onDelete, onEdit }) => {
   const navigate = useNavigate();
+  const isOwner = isAdmin && user && (product.user === user._id || product.user?._id === user._id);
 
   return (
     <div className="border border-gray-150 rounded-xl shadow-sm p-4 bg-white flex flex-col justify-between hover:shadow-md transition duration-200">
@@ -44,7 +45,15 @@ const ProductCard = ({ product, isAdmin, onDelete }) => {
         >
           View Details
         </button>
-        {isAdmin && onDelete && (
+        {isOwner && onEdit && (
+          <button
+            className="bg-green-50 hover:bg-green-100 text-green-600 text-sm font-semibold py-2 px-3 rounded-lg cursor-pointer transition"
+            onClick={() => onEdit(product)}
+          >
+            Edit
+          </button>
+        )}
+        {isOwner && onDelete && (
           <button
             className="bg-red-50 hover:bg-red-100 text-red-600 text-sm font-semibold py-2 px-3 rounded-lg cursor-pointer transition"
             onClick={() => onDelete(product._id)}

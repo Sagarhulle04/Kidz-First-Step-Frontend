@@ -1,6 +1,9 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://kidz-first-step.onrender.com";
+axios.defaults.baseURL =
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:3000"
+    : "https://kidz-first-step.onrender.com";
 
 // Request interceptor to add authorization token
 axios.interceptors.request.use(
